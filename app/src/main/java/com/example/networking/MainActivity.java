@@ -5,6 +5,10 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -23,12 +27,17 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         setContentView(R.layout.activity_main);
 
         new JsonFile(this, this).execute(JSON_FILE);
+
     }
 
 
     @Override
     public void onPostExecute(String json) {
-        Log.d("MainActivity", json);
+       Gson mo = new Gson();
+       Type hamed = new TypeToken<ArrayList<RecyclerViewItem>>(){}.getType();
+
+       ArrayList<RecyclerViewItem> data  = mo.fromJson(json, hamed);
+       mountain.addAll(data);
     }
 
 }

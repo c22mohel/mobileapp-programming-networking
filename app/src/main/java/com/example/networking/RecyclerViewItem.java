@@ -2,29 +2,14 @@ package com.example.networking;
 
 public class RecyclerViewItem {
 
-    public RecyclerViewItem(String name, int size) {
-        this.name = name;
-        this.size = size;
+    private String title;
+
+    public RecyclerViewItem(String title) {
+        this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    private String name;
-    private int size;
-
 
 }

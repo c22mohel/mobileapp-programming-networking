@@ -1,9 +1,64 @@
 
 # Rapport
 
-**Skriv din rapport här!**
+Det första som jag behövde göra var att skapa en RecyclerView. detta gjordes genom att skapa en RecyclerView widget i activity main.
+Sedan så skapades en ny layout fil med en textview. sedan så skapade jag en ny java fil som representerar items, java filen heter recyclerviewitem.
 
-_Du kan ta bort all text som finns sedan tidigare_.
+Sedan så Deklarera och initiera en adapter med denna kod. Denna kod lägger även till en onclick som skapar en pop-up-notis när man clickar på texten. 
+
+        adapter = new RecyclerViewAdapter(this, mountains, new RecyclerViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(RecyclerViewItem item) {
+                Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+Efter det så lägger jag denna kod som länkar veiw med RecyclerView.
+    RecyclerView view = findViewById(R.id.recycler_view);
+
+Fösta raden ger den en linearlayout och den andra berättar om den vilken adapter som skall användas. 
+        view.setLayoutManager(new LinearLayoutManager(this));
+        view.setAdapter(adapter);
+
+Jag har även skapat en ny java class som heter RecyclerViewAdapter.
+Jag har även skapat en ny java class som heter mountain som håller koll på id, name, cost size med denna kod. notera att endast name kommer användas.
+
+    public class Mountain {
+
+        @SerializedName("ID")
+        private String ID;
+        @SerializedName("name")
+        private String name;
+        @SerializedName("cost")
+        private int feet;
+        @SerializedName("size")
+        private int meter;
+        
+        public String getName() {
+            return name;
+        }
+    }
+
+denna kod skapar en string som hämtar från json filen mountains. 
+    private final String JSON_FILE = "mountains.json";
+denna kod läser json filen.
+    new JsonFile(this, this).execute(JSON_FILE);
+
+Denna kod konverterar json filen så att den kan användas i  RecyclerView.
+Gson gson = new Gson();
+
+        // Unmarshall JSON -> list of objects
+        Type type = new TypeToken<List<Mountain>>() {}.getType();
+        List<Mountain> listOfMountains = gson.fromJson(json, type);
+
+sista så skapas en for loop som lägger till mountain name till recyclerView
+
+    for(Mountain mountain : listOfMountains){
+    Log.d("json_output_loop", mountain.getName());
+    mountains.add(new RecyclerViewItem(mountain.getName()));
+    }
+
+
 
 ## Följande grundsyn gäller dugga-svar:
 
@@ -33,7 +88,7 @@ function errorCallback(error) {
 
 Bilder läggs i samma mapp som markdown-filen.
 
-![](android.png)
+![](screenshot1.png)
 
 Läs gärna:
 
